@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 #  Copyright 2011 Sybren A. Stüvel <sybren@stuvel.eu>
+#  Copyright 2018 Mark Lockett <mark@deliveryengine.net>
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -23,6 +24,12 @@ import os
 from rsa import common, transform
 from rsa._compat import byte
 
+_urandom = os.urandom
+
+def set_custom_urandom(urandom):
+    global _urandom
+    _urandom = urandom
+
 
 def read_random_bits(nbits):
     """Reads 'nbits' random bits.
@@ -34,11 +41,12 @@ def read_random_bits(nbits):
     nbytes, rbits = divmod(nbits, 8)
 
     # Get the random bytes
-    randomdata = os.urandom(nbytes)
+    global _urandom
+    randomdata = _urandom(nbytes)
 
     # Add the remaining random bits
     if rbits > 0:
-        randomvalue = ord(os.urandom(1))
+        randomvalue = ord(_urandom(1))
         randomvalue >>= (8 - rbits)
         randomdata = byte(randomvalue) + randomdata
 

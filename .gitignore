@@ -15,3 +15,7 @@
 
 /build/
 /doc/_build/
+
+/venv/
+.pytest_cache
+

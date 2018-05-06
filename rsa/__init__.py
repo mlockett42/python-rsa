@@ -27,6 +27,7 @@ Use with care.
 from rsa.key import newkeys, PrivateKey, PublicKey
 from rsa.pkcs1 import encrypt, decrypt, sign, verify, DecryptionError, \
     VerificationError
+from rsa.randnum import set_custom_urandom
 
 __author__ = "Sybren Stuvel, Barry Mead and Yesudeep Mangalapilly"
 __date__ = "2016-03-29"
